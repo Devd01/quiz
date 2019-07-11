@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Home from './components/home/home';
 import Quiz from './components/quiz/quiz';
 
-const Routes = () => {
+const Routes = (props) => {
         return(
             <Switch>
                 <Route path="/" exact component={Home}/>

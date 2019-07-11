@@ -1,9 +1,10 @@
 import React from 'react';
+import QuizContainer from '../../container/quizContainer/quizContainer';
 
-const quiz = () => {
+const quiz = (props) => {
     return (
         <div>
-            quiz
+            < QuizContainer {...props}/>
         </div>
     );
 };

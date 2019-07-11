@@ -8,11 +8,14 @@ import promiseMiddleware from 'redux-promise';
 import Routes from './routes'
 
 import reducers from './reducers'
+import 'typeface-roboto';
+
+
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore)
 
 ReactDOM.render(
         <Provider store={createStoreWithMiddleware(reducers)}>
-            <BrowserRouter>
+            <BrowserRouter >
                 <Routes/>
             </BrowserRouter>
         </Provider>

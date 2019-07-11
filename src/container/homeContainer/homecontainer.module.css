@@ -1,0 +1,19 @@
+.parentDivHome{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center; 
+
+}
+.parentDivHome>a{
+    text-decoration: none;
+}
+.parentDivWelcome{
+    font-size: 3rem !important;
+    font-weight:bolder !important;
+    margin-bottom: 20px !important;
+}
+.parentDivHome>div:last-child{
+    color: grey;
+    font-size: 12px;
+}
