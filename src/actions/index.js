@@ -12,7 +12,7 @@ const request = axios.get(`${URL}`)
                         Data = response.data.results;
                         return response.data.results;
                         });
-console.log(Data)
+
 
 
 const  decodeHTML=html=>{
@@ -24,8 +24,8 @@ const  decodeHTML=html=>{
                         .replace( /&gt;/g,'>')
                         .replace(/&#039;/g,'\'')
                     }
-// Data.map(item=>decodeHTML(item.question))
-console.log(Data)
+
+
 export function questionListAll(){
 
 
@@ -37,13 +37,14 @@ export function questionListAll(){
 
 export function questionListWithResponse(result){
 
-     console.log(result,request)
+     
      Data.map((item,index)=>{
          item.response=result[index]
+         return item;
      })
-     console.log(Data)
+     
     return {
         type: types.GET_QUESTIONS_WITH_RESPONSE,
-        payload: request   
+        payload: Data   
     }
 }

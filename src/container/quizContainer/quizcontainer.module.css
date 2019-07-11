@@ -1,6 +1,32 @@
 .answerButton{
-    cursor: not-allowed !important;
+    /* cursor: not-allowed !important; */
 
     /* pointer-events: none; */
     
+}
+
+.quizwrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+.quizwrapper>div:first-child{
+    font-size: 2rem;
+    color: grey;
+    font-weight: bolder;
+}
+.quizwrapper>div:nth-child(2){
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 20px;
+
+}
+.loadingWrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center
 }

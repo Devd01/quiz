@@ -2,15 +2,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Close from '@material-ui/icons/Close';
@@ -29,20 +23,20 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function generate(element) {
-  return [0, 1, 2].map(value =>
-    React.cloneElement(element, {
-      key: value,
-    }),
-  );
-}
-
 export default function InteractiveList(props) {
   const classes = useStyles();
-  const [dense, setDense] = React.useState(false);
-  const [secondary, setSecondary] = React.useState(false);
+  
   const Response =props.Result;
-  console.log(Response)
+  const Correct = Response.reduce((total,item)=>{
+    
+    if(item.response){  
+      return total +1}
+
+      return total;
+
+  },0)
+  const Total = Response.length;
+  
   return (
     <div className={classes.root}>
       <Grid container spacing={2}>
@@ -51,7 +45,7 @@ export default function InteractiveList(props) {
             Your Score with Response
           </Typography>
           <div className={classes.demo}>
-            <List dense='dense'>
+            <List >
               {Response.map((item,index)=>(
                 <ListItem key ={index}>
                   <ListItemText
@@ -60,7 +54,7 @@ export default function InteractiveList(props) {
                   />
                   <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="Delete">
-                     { item.response?<CheckCircle />:< Close/>
+                     { item.response?<CheckCircle style={{color:'green'}} />:< Close style={{color:'red'}}/>
                      }
                     </IconButton>
                   </ListItemSecondaryAction>
@@ -68,6 +62,9 @@ export default function InteractiveList(props) {
               ))}
             </List>
           </div>
+          <Typography variant="h6" className={classes.title}>
+            {`Your have score ${Correct} out of ${Total}`} 
+          </Typography>
         </Grid>
       </Grid>
     </div>

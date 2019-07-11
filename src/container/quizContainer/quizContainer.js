@@ -3,8 +3,12 @@ import { questionListAll, questionListWithResponse } from '../../actions';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Style from './quizcontainer.module.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 //Components imports
 import Loading from '../../widgets/loading/loading';
+import Snackbar from '../../widgets/snackbar/snackbar';
 
 class quizContainer extends Component {
    state={
@@ -12,7 +16,9 @@ class quizContainer extends Component {
        questionId:0,
        disabled:false,
        Class:'',
-       userAnswer:[]
+       userAnswer:[],
+       open:false,
+       message:''
        
    }
 
@@ -21,29 +27,35 @@ this.props.dispatch(questionListAll())
 }
 
 componentWillReceiveProps(nextProps){
-    console.log('this.props',this.state.questionList,nextProps)
+    
     if(nextProps.questions.questionList!==this.state.questionList)
-        {    console.log('inside')
+        {    
              this.setState({questionList:nextProps.questions.questionList})}
 }
 
+handleClose =()=> {
+    this.setState({open: false });
+  }
+
 handleAnswer=answer=>{
     const { questionId,questionList,userAnswer } =this.state;
-    console.log(answer ,questionList[questionId].correct_answer)
+    let message = ''
+    
     if (questionList[questionId].correct_answer === answer){
     userAnswer[questionId]=true
-    }else{userAnswer[questionId]=false}
-    this.setState({userAnswer})
+    message='You are Right'
+    }else{
+        userAnswer[questionId]=false
+        message='Wrong Answer'
+    }
+    this.setState({userAnswer,open:true,message,disabled:!this.state.disabled})
 
     if (questionId<questionList.length-1){
-    setTimeout(()=>this.setState({questionId:this.state.questionId+1}),500)
+    setTimeout(()=>this.setState({questionId:this.state.questionId+1,disabled:!this.state.disabled}),500)
     } else {
-        console.log('inside else',this.state.userAnswer)
+        
         this.props.dispatch(questionListWithResponse(this.state.userAnswer))
-        // questionListWithResponse
-        //  Redirect();
-        this.props.history.push("/")
-        // return <Redirect to="/home" push={true} />
+        setTimeout(()=>this.props.history.push("/"),500)
         }
     
 
@@ -53,38 +65,35 @@ handleAnswer=answer=>{
 
 
 }
-decodeHTML=html=>{
-    return String(html)
-    .replace(/&amp;/g,'&')
-    .replace( /&quot;/g,'"')
-    .replace( /'/g,'\'')
-    .replace( /&lt;/g,'<')
-    .replace( /&gt;/g,'>')
-    .replace(/&#039;/g,'\'')
-}
-
-
     render() {
-        console.log(this.props,this.state)
-        const { questionId,questionList } =this.state;
+        
+        const { questionId,questionList, disabled } =this.state;
         return (
             questionList!==undefined && questionList.length>0?
-            <div>
-               {/* {this.decodeHTML(questionList[questionId].question)} */}
-               <div>{questionList[questionId].question}</div>
-                <div>
-                        <Button data-value="True"  className={Style.answerButton} onClick={()=>this.handleAnswer('True')} variant="contained" color="primary" >
+            <React.Fragment>
+            <CssBaseline />
+            <Container >
+            
+               
+               <Typography className={Style.quizwrapper} component="div" style={{ backgroundColor: '#cfe8fc', height: '100%' ,minHeight:'100vh'}} >
+                        
+                       <div>{questionList[questionId].question}</div>
+                       <div>
+                        <Button data-value="True" disabled={disabled}  className={Style.answerButton} onClick={()=>this.handleAnswer('True')} variant="contained" color="primary" >
                             True
                         </Button>
-                        <Button data-value="False"  onClick={()=>this.handleAnswer('False')} variant="contained" color="primary" >
+                        <Button data-value="False" disabled={disabled} onClick={()=>this.handleAnswer('False')} variant="contained" color="primary" >
                             False
                         </Button>
-
-
-                </div>
-            </div>
+                        </div>
+                </Typography>
+                < Snackbar open = {this.state.open} handleClose = {this.handleClose} message={this.state.message}/>
+        
+            
+            </Container>
+          </React.Fragment>
             :
-            < Loading/>
+            <div className={Style.loadingWrapper}>< Loading/></div>
         );
     }
 }

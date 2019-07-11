@@ -7,13 +7,24 @@
 }
 .parentDivHome>a{
     text-decoration: none;
+    /* padding: 20px; */
 }
 .parentDivWelcome{
     font-size: 3rem !important;
     font-weight:bolder !important;
     margin-bottom: 20px !important;
+    color: grey
 }
 .parentDivHome>div:last-child{
     color: grey;
     font-size: 12px;
+    margin-bottom: 20px;
+}
+.resultHeader{
+    margin-bottom: 20px;
+}
+.resultHeader>div>div>div>h6{
+    text-align: center;
+    color: grey;
+    font-size: 2rem;
 }

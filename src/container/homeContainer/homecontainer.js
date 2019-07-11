@@ -19,7 +19,7 @@ class homecontainer extends Component {
 
     render() {
     const Result = this.props.questionWithResponse;
-    console.log(this.props)
+    
         return (
             
             <React.Fragment>
@@ -27,14 +27,14 @@ class homecontainer extends Component {
             <Container >
               <Typography className={styles.parentDivHome} component="div" style={{ backgroundColor: '#cfe8fc', height: '100%' ,minHeight:'100vh'}} >
                {Result ?
-             <div>< List Result = {Result} /></div>
+             <div className={styles.resultHeader}>< List Result = {Result} /></div>
             :<Typography component="div" className={styles.parentDivWelcome}>Welcome to a Simple Quiz App</Typography>}
                <Link to='/quiz'>
                  <Button variant="contained" color="primary" >
-                    Play Quiz
+                    {Result?'Play Again':'Play Quiz'}
                  </Button>
                </Link>
-               <Typography component="div">Click the Button to Test Your Knowledge </Typography>
+               <Typography component="div">{Result?null:'Click Button to Test Your Knowledge'} </Typography>
               
               </Typography>
             </Container>
